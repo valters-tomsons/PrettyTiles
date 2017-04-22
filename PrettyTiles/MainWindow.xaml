@@ -1,12 +1,25 @@
-﻿<Window x:Class="PrettyTiles.MainWindow"
+﻿<Controls:MetroWindow 
+        x:Class="PrettyTiles.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PrettyTiles"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        ResizeMode="NoResize"
+        Height="500" Width="600"
+        MinHeight="500" MinWidth="600"
+        Title="PrettyTile">
     <Grid>
-        
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Width="600" Height="300" VerticalAlignment="Top">
+            <ListView x:Name="IconList" SelectionChanged="IconList_SelectionChanged" Focusable="False" BorderThickness="0"/>
+        </ScrollViewer>
+
+        <StackPanel Margin="5,0,5,100" Orientation="Vertical" VerticalAlignment="Bottom">
+            <TextBlock Text="Target Path:" />
+            <TextBox x:Name="TargetTextBox" Width="500" />
+            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick"/>
+        </StackPanel>
     </Grid>
-</Window>
+</Controls:MetroWindow>

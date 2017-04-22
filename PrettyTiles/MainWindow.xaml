@@ -24,15 +24,21 @@
             <TextBox x:Name="TargetTextBox" IsEnabled="False" Width="500" />
         </StackPanel>
 
-        <StackPanel Margin="5,0" Orientation="Horizontal" Grid.Row="1">
-            <Image x:Name="TilePreview" Height="150" Width="150" Source="resources/placeholder.jpg"/>
-            <Button Margin="10,65" VerticalAlignment="Bottom" Height="30" Width="100" Content="Browse Image" />
-            <StackPanel VerticalAlignment="Center">
+        <Grid Grid.Row="1" Margin="5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="TilePreview" Height="150" Width="150" Source="resources/placeholder.jpg" Grid.Column="0"/>
+            <Button Grid.Column="0" VerticalAlignment="Bottom" Margin="0,20" Height="30" Width="100" Content="Browse Image" />
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
                 <CheckBox x:Name="ShowLabel" Content="Show Label"/>
                 <CheckBox x:Name="DarkLabel" Content="Dark Label" Margin="0,5" />
             </StackPanel>
-        </StackPanel>
-        
+            <Button Width="90" Height="30" Margin="50,0" Grid.Column="2" Content="Update"/>
+        </Grid>
+
         <iconPacks:PackIconMaterial Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>
     </Grid>
 </Controls:MetroWindow>

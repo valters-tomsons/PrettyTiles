@@ -84,8 +84,10 @@ namespace PrettyTiles
             string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
             string visualXml = Path.Combine(fileDirectory, $"{currentFile}.visualelementsmanifest.xml");
             bool labelValue = TileLabelFromXml(visualXml);
+            bool darkValue = TileDarkFromXml(visualXml);
 
             ShowLabel.IsChecked = labelValue;
+            DarkLabel.IsChecked = darkValue;
         }
 
         //Get tile image source from visual elements manifest xml
@@ -131,6 +133,32 @@ namespace PrettyTiles
                                 case "VisualElements":
                                     string attribute = reader["ShowNameOnSquare150x150Logo"];
                                     if(attribute == "on") { return true; } else { return false; }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        static bool TileDarkFromXml(string _xml)
+        {
+            if (File.Exists(_xml))
+            {
+                using (XmlReader reader = XmlReader.Create(_xml))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsStartElement())
+                        {
+                            switch (reader.Name)
+                            {
+                                case "Application":
+                                    break;
+                                case "VisualElements":
+                                    string attribute = reader["ForegroundText"];
+                                    //dark and light
+                                    if (attribute == "dark") { return true; } else { return false; }
                             }
                         }
                     }

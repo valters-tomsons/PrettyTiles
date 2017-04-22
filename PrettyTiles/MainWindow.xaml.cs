@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using MahApps.Metro.Controls;
 using System.Diagnostics;
 using System.IO;
+using MahApps.Metro.Controls;
 using Shell32;
+using System.Xml;
+using System.Windows.Media.Imaging;
+using System.Drawing;
 
 namespace PrettyTiles
 {
@@ -14,6 +17,8 @@ namespace PrettyTiles
 
         private static List<string> ShortcutList = new List<string>();
         private static string _programs = $"{_appdata}\\Microsoft\\Windows\\Start Menu\\Programs\\";
+
+        private static string CurrentFile = null;
 
         public MainWindow()
         {
@@ -52,6 +57,54 @@ namespace PrettyTiles
             Process.Start("https://github.com/FaithLV");
         }
 
+        //Display tile in preview
+        private void UpdateImage()
+        {
+            string fileDirectory = Path.GetDirectoryName(CurrentFile);
+            string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
+            string visualXml = Path.Combine(fileDirectory, $"{currentFile}.visualelementsmanifest.xml");
+            string tileImage = TileSourceFromXml(visualXml);
+            if(tileImage != null)
+            {
+                //Load tile from image
+                TilePreview.Source = new BitmapImage(new Uri($"{fileDirectory}\\{tileImage}"));
+            }
+            else
+            {
+                //Set placeholder tile
+                var placeholderUri = new Uri("resources/placeholder.jpg", UriKind.RelativeOrAbsolute);
+                TilePreview.Source = new BitmapImage(placeholderUri);
+            }
+            
+        }
+
+        //Get tile image source from visual elements manifest xml
+        static string TileSourceFromXml(string _xml)
+        {
+            if (File.Exists(_xml))
+            {
+                using (XmlReader reader = XmlReader.Create(_xml))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsStartElement())
+                        {
+                            switch (reader.Name)
+                            {
+                                case "Application":
+                                    Console.WriteLine("Application found!");
+                                    break;
+                                case "VisualElements":
+                                    string attribute = reader["Square150x150Logo"];
+                                    return attribute;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
         //Get target path from shortcut (lnk)
         //Should work for all windows versions, because 2006
         //http://www.saunalahti.fi/janij/blog/2006-12.html#d6d9c7ee-82f9-4781-8594-152efecddae2
@@ -70,10 +123,13 @@ namespace PrettyTiles
             string _linkpath = $"{_programs}{IconList.SelectedItem.ToString()}.lnk";
 
             //Full path to the target file
-            string _filepath = GetTargetPath(IconList.SelectedItem.ToString());
+            CurrentFile = GetTargetPath(IconList.SelectedItem.ToString());
 
             //Update the "Target Path" textbox
-            TargetTextBox.Text = _filepath;
+            TargetTextBox.Text = CurrentFile;
+
+            //Update tile image file
+            UpdateImage();
         }
     }
 }

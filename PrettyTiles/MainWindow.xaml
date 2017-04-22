@@ -8,18 +8,26 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Height="500" Width="600"
+        Height="600" Width="600"
         MinHeight="500" MinWidth="600"
         Title="PrettyTile">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Width="600" Height="300" VerticalAlignment="Top">
-            <ListView x:Name="IconList" SelectionChanged="IconList_SelectionChanged" Focusable="False" BorderThickness="0"/>
-        </ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <ListView x:Name="IconList" SelectionChanged="IconList_SelectionChanged" Focusable="False" BorderThickness="0" Grid.Row="0"/>
 
-        <StackPanel Margin="5,0,5,100" Orientation="Vertical" VerticalAlignment="Bottom">
+        <StackPanel Orientation="Vertical" Grid.Row="1">
             <TextBlock Text="Target Path:" />
             <TextBox x:Name="TargetTextBox" Width="500" />
-            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick"/>
         </StackPanel>
+
+        <StackPanel Margin="5,0" Orientation="Horizontal" Grid.Row="1">
+            <Image x:Name="TilePreview" Height="120" Width="120" Source="resources/placeholder.jpg"/>
+        </StackPanel>
+        
+        <iconPacks:PackIconMaterial Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>
     </Grid>
 </Controls:MetroWindow>

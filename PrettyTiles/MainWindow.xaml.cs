@@ -58,7 +58,7 @@ namespace PrettyTiles
         }
 
         //Display tile in preview
-        private void UpdateImage()
+        private void UpdateImage(System.Windows.Controls.Image target)
         {
             string fileDirectory = Path.GetDirectoryName(CurrentFile);
             string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
@@ -67,15 +67,25 @@ namespace PrettyTiles
             if(tileImage != null)
             {
                 //Load tile from image
-                TilePreview.Source = new BitmapImage(new Uri($"{fileDirectory}\\{tileImage}"));
+                target.Source = new BitmapImage(new Uri($"{fileDirectory}\\{tileImage}"));
             }
             else
             {
                 //Set placeholder tile
                 var placeholderUri = new Uri("resources/placeholder.jpg", UriKind.RelativeOrAbsolute);
-                TilePreview.Source = new BitmapImage(placeholderUri);
+                target.Source = new BitmapImage(placeholderUri);
             }
             
+        }
+
+        private void UpdateCheckboxes()
+        {
+            string fileDirectory = Path.GetDirectoryName(CurrentFile);
+            string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
+            string visualXml = Path.Combine(fileDirectory, $"{currentFile}.visualelementsmanifest.xml");
+            bool labelValue = TileLabelFromXml(visualXml);
+
+            ShowLabel.IsChecked = labelValue;
         }
 
         //Get tile image source from visual elements manifest xml
@@ -92,7 +102,6 @@ namespace PrettyTiles
                             switch (reader.Name)
                             {
                                 case "Application":
-                                    Console.WriteLine("Application found!");
                                     break;
                                 case "VisualElements":
                                     string attribute = reader["Square150x150Logo"];
@@ -103,6 +112,31 @@ namespace PrettyTiles
                 }
             }
             return null;
+        }
+
+        static bool TileLabelFromXml(string _xml)
+        {
+            if (File.Exists(_xml))
+            {
+                using (XmlReader reader = XmlReader.Create(_xml))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsStartElement())
+                        {
+                            switch (reader.Name)
+                            {
+                                case "Application":
+                                    break;
+                                case "VisualElements":
+                                    string attribute = reader["ShowNameOnSquare150x150Logo"];
+                                    if(attribute == "on") { return true; } else { return false; }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         //Get target path from shortcut (lnk)
@@ -129,7 +163,9 @@ namespace PrettyTiles
             TargetTextBox.Text = CurrentFile;
 
             //Update tile image file
-            UpdateImage();
+            UpdateImage(TilePreview);
+
+            UpdateCheckboxes();
         }
     }
 }

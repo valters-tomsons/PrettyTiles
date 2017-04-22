@@ -21,11 +21,16 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <TextBlock Text="Target Path:" />
-            <TextBox x:Name="TargetTextBox" Width="500" />
+            <TextBox x:Name="TargetTextBox" IsEnabled="False" Width="500" />
         </StackPanel>
 
         <StackPanel Margin="5,0" Orientation="Horizontal" Grid.Row="1">
-            <Image x:Name="TilePreview" Height="120" Width="120" Source="resources/placeholder.jpg"/>
+            <Image x:Name="TilePreview" Height="150" Width="150" Source="resources/placeholder.jpg"/>
+            <Button Margin="10,65" VerticalAlignment="Bottom" Height="30" Width="100" Content="Browse Image" />
+            <StackPanel VerticalAlignment="Center">
+                <CheckBox x:Name="ShowLabel" Content="Show Label"/>
+                <CheckBox x:Name="DarkLabel" Content="Dark Label" Margin="0,5" />
+            </StackPanel>
         </StackPanel>
         
         <iconPacks:PackIconMaterial Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>

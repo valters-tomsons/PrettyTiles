@@ -7,7 +7,8 @@ using MahApps.Metro.Controls;
 using Shell32;
 using System.Xml;
 using System.Windows.Media.Imaging;
-using System.Drawing;
+using Ookii.Dialogs.Wpf;
+using System.Windows;
 
 namespace PrettyTiles
 {
@@ -57,7 +58,7 @@ namespace PrettyTiles
             Process.Start("https://github.com/FaithLV");
         }
 
-        //Display tile in preview
+        //Display tile in preview from visual manifest
         private void UpdateImage(System.Windows.Controls.Image target)
         {
             string fileDirectory = Path.GetDirectoryName(CurrentFile);
@@ -194,6 +195,23 @@ namespace PrettyTiles
             UpdateImage(TilePreview);
 
             UpdateCheckboxes();
+        }
+
+        //"Browse Image" button
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new VistaOpenFileDialog();
+            dialog.Title = "Select an image for Tile";
+            dialog.ShowDialog();
+            try
+            {
+                TilePreview.Source = new BitmapImage(new Uri(dialog.FileName));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Failed to set the tile image.");
+                Console.WriteLine(ex);
+            }
         }
     }
 }

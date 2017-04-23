@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image x:Name="TilePreview" Height="150" Width="150" Source="resources/placeholder.jpg" Grid.Column="0"/>
-            <Button Grid.Column="0" VerticalAlignment="Bottom" Margin="0,20" Height="30" Width="100" Content="Browse Image" />
+            <Button Click="BrowseButton_Click" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,20" Height="30" Width="100" Content="Browse Image" />
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
                 <CheckBox x:Name="ShowLabel" Content="Show Label"/>
                 <CheckBox x:Name="DarkLabel" Content="Dark Label" Margin="0,5" />

@@ -36,7 +36,7 @@
                 <CheckBox x:Name="ShowLabel" Content="Show Label"/>
                 <CheckBox x:Name="DarkLabel" Content="Dark Label" Margin="0,5" />
             </StackPanel>
-            <Button Width="90" Height="30" Margin="50,0" Grid.Column="2" Content="Update"/>
+            <Button Click="UpdateButton_Click" Width="90" Height="30" Margin="50,0" Grid.Column="2" Content="Update"/>
         </Grid>
 
         <iconPacks:PackIconMaterial Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>

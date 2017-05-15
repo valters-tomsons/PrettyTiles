@@ -69,5 +69,22 @@ namespace PrettyTiles.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Application xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        ///    &lt;VisualElements
+        ///        BackgroundColor=&quot;black&quot;
+        ///        ShowNameOnSquare150x150Logo=&quot;on&quot;
+        ///        ForegroundText=&quot;light&quot;
+        ///        Square150x150Logo=&quot;tile.jpg&quot;
+        ///        Square70x70Logo=&quot;tile.jpg&quot;/&gt;
+        ///&lt;/Application&gt;
+        ///.
+        /// </summary>
+        internal static string template {
+            get {
+                return ResourceManager.GetString("template", resourceCulture);
+            }
+        }
     }
 }

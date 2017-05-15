@@ -136,6 +136,9 @@
   <ItemGroup>
     <Resource Include="Resources\placeholder.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\template.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <ItemGroup>

@@ -28,6 +28,17 @@ namespace PrettyTiles
             LoadShortcuts();
         }
 
+        void CopyTemplate()
+        {
+            string directory = Path.GetDirectoryName(CurrentFile);
+            string filename = Path.GetFileNameWithoutExtension(CurrentFile);
+            string target = $"{directory}\\{filename}.visualelementsmanifest.xml";
+
+            Console.WriteLine(target);
+            //Copy manifest template
+            File.Copy(Properties.Resources.template, target);
+        }
+
         //Discover the shortcuts in start menu
         static void ExploreShortcuts()
         {
@@ -73,7 +84,7 @@ namespace PrettyTiles
             else
             {
                 //Set placeholder tile
-                var placeholderUri = new Uri("resources/placeholder.jpg", UriKind.RelativeOrAbsolute);
+                var placeholderUri = new Uri("resources\\placeholder.jpg", UriKind.RelativeOrAbsolute);
                 target.Source = new BitmapImage(placeholderUri);
             }
             
@@ -212,6 +223,12 @@ namespace PrettyTiles
                 MessageBox.Show("Failed to set the tile image.");
                 Console.WriteLine(ex);
             }
+        }
+
+        //"Update" Button 
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            CopyTemplate();
         }
     }
 }

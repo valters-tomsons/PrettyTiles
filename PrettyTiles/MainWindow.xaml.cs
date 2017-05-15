@@ -36,7 +36,16 @@ namespace PrettyTiles
 
             Console.WriteLine(target);
             //Copy manifest template
-            File.Copy(Properties.Resources.template, target);
+            try
+            {
+                File.Copy(Properties.Resources.template, target, true);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Something went wrong, couldn't make a visual manifest");
+                Console.WriteLine(ex);
+                MessageBox.Show("Failed to update. Are you running as administrator?");
+            }
         }
 
         //Discover the shortcuts in start menu
@@ -228,7 +237,16 @@ namespace PrettyTiles
         //"Update" Button 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            CopyTemplate();
+            string directory = Path.GetDirectoryName(CurrentFile);
+            string filename = Path.GetFileNameWithoutExtension(CurrentFile);
+            string target = $"{directory}\\{filename}.visualelementsmanifest.xml";
+
+            //If visual manifest doesn't exist, make one
+            if(File.Exists(target) == false )
+            {
+                CopyTemplate();
+            }
+            
         }
     }
 }

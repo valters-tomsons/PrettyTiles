@@ -9,6 +9,7 @@ using System.Xml;
 using System.Windows.Media.Imaging;
 using Ookii.Dialogs.Wpf;
 using System.Windows;
+using System.Reflection;
 
 namespace PrettyTiles
 {
@@ -38,7 +39,15 @@ namespace PrettyTiles
             //Copy manifest template
             try
             {
-                File.Copy(Properties.Resources.template, target, true);
+                using (Stream template = GetType().Assembly.GetManifestResourceStream(Properties.Resources.template))
+                {
+                    using (Stream targetOutput = File.OpenWrite(target))
+                    {
+
+                        template.CopyTo(targetOutput);
+                    }
+                }
+                    
             }
             catch(Exception ex)
             {
@@ -46,6 +55,7 @@ namespace PrettyTiles
                 Console.WriteLine(ex);
                 MessageBox.Show("Failed to update. Are you running as administrator?");
             }
+            
         }
 
         //Discover the shortcuts in start menu
@@ -244,7 +254,12 @@ namespace PrettyTiles
             //If visual manifest doesn't exist, make one
             if(File.Exists(target) == false )
             {
+                Console.WriteLine("Visual Elements manifest not found, creating one.");
                 CopyTemplate();
+            }
+            else
+            {
+                Console.WriteLine("Visual Elements manifest exists, not creating a new one.");
             }
             
         }

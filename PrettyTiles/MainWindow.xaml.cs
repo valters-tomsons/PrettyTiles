@@ -35,27 +35,11 @@ namespace PrettyTiles
             string filename = Path.GetFileNameWithoutExtension(CurrentFile);
             string target = $"{directory}\\{filename}.visualelementsmanifest.xml";
 
-            Console.WriteLine(target);
-            //Copy manifest template
-            try
+            using (StreamWriter writer = new StreamWriter(target))
             {
-                using (Stream template = GetType().Assembly.GetManifestResourceStream(Properties.Resources.template))
-                {
-                    using (Stream targetOutput = File.OpenWrite(target))
-                    {
+                writer.Write(Properties.Resources.template);
+            }
 
-                        template.CopyTo(targetOutput);
-                    }
-                }
-                    
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Something went wrong, couldn't make a visual manifest");
-                Console.WriteLine(ex);
-                MessageBox.Show("Failed to update. Are you running as administrator?");
-            }
-            
         }
 
         //Discover the shortcuts in start menu

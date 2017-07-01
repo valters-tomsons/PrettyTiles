@@ -108,22 +108,29 @@ namespace PrettyTiles
         {
             if (File.Exists(_xml))
             {
-                using (XmlReader reader = XmlReader.Create(_xml))
+                try
                 {
-                    while (reader.Read())
+                    using (XmlReader reader = XmlReader.Create(_xml))
                     {
-                        if (reader.IsStartElement())
+                        while (reader.Read())
                         {
-                            switch (reader.Name)
+                            if (reader.IsStartElement())
                             {
-                                case "Application":
-                                    break;
-                                case "VisualElements":
-                                    string attribute = reader["Square150x150Logo"];
-                                    return attribute;
+                                switch (reader.Name)
+                                {
+                                    case "Application":
+                                        break;
+                                    case "VisualElements":
+                                        string attribute = reader["Square150x150Logo"];
+                                        return attribute;
+                                }
                             }
                         }
                     }
+                }
+                catch
+                {
+                    DeleteManifest(_xml);
                 }
             }
             return null;
@@ -133,23 +140,31 @@ namespace PrettyTiles
         {
             if (File.Exists(_xml))
             {
-                using (XmlReader reader = XmlReader.Create(_xml))
+                try
                 {
-                    while (reader.Read())
+                    using (XmlReader reader = XmlReader.Create(_xml))
                     {
-                        if (reader.IsStartElement())
+                        while (reader.Read())
                         {
-                            switch (reader.Name)
+                            if (reader.IsStartElement())
                             {
-                                case "Application":
-                                    break;
-                                case "VisualElements":
-                                    string attribute = reader["ShowNameOnSquare150x150Logo"];
-                                    if(attribute == "on") { return true; } else { return false; }
+                                switch (reader.Name)
+                                {
+                                    case "Application":
+                                        break;
+                                    case "VisualElements":
+                                        string attribute = reader["ShowNameOnSquare150x150Logo"];
+                                        if (attribute == "on") { return true; } else { return false; }
+                                }
                             }
                         }
                     }
                 }
+                catch
+                {
+                    DeleteManifest(_xml);
+                }
+                
             }
             return false;
         }
@@ -158,26 +173,43 @@ namespace PrettyTiles
         {
             if (File.Exists(_xml))
             {
-                using (XmlReader reader = XmlReader.Create(_xml))
+                try
                 {
-                    while (reader.Read())
+                    using (XmlReader reader = XmlReader.Create(_xml))
                     {
-                        if (reader.IsStartElement())
+                        while (reader.Read())
                         {
-                            switch (reader.Name)
+                            if (reader.IsStartElement())
                             {
-                                case "Application":
-                                    break;
-                                case "VisualElements":
-                                    string attribute = reader["ForegroundText"];
-                                    //dark and light
-                                    if (attribute == "dark") { return true; } else { return false; }
+                                switch (reader.Name)
+                                {
+                                    case "Application":
+                                        break;
+                                    case "VisualElements":
+                                        string attribute = reader["ForegroundText"];
+                                        //dark and light
+                                        if (attribute == "dark") { return true; } else { return false; }
+                                }
                             }
                         }
                     }
                 }
+                catch
+                {
+                    DeleteManifest(_xml);
+                }
+                
             }
             return false;
+        }
+
+        private static void DeleteManifest(string _xml)
+        {
+            if(File.Exists(_xml))
+            {
+                Console.WriteLine("Manifest file broken, deleting");
+                File.Delete(_xml);
+            }
         }
 
         //Get target path from shortcut (lnk)

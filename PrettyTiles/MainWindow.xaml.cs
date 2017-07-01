@@ -234,10 +234,17 @@ namespace PrettyTiles
 
         private void CopyImage()
         {
+            Console.WriteLine("Copying tile image...");
             string sourceFile = TilePreview.Source.ToString().Replace(@"file:///", String.Empty);
             string targetFile = $"{Path.GetDirectoryName(CurrentFile)}/tile.jpg";
-            Console.WriteLine(TilePreview.Source);
             File.Copy(sourceFile, targetFile, true);
+        }
+
+        //Force a tile refresh in start menu
+        private void RefreshLink(string _file)
+        {
+            Console.WriteLine("Refreshing the tile");
+            File.SetLastWriteTime(_file, DateTime.Now);
         }
 
         //"Update" Button 
@@ -246,9 +253,10 @@ namespace PrettyTiles
             string directory = Path.GetDirectoryName(CurrentFile);
             string filename = Path.GetFileNameWithoutExtension(CurrentFile);
             string target = $"{directory}\\{filename}.visualelementsmanifest.xml";
+            string _linkpath = $"{_programs}{IconList.SelectedItem.ToString()}.lnk";
 
             //If visual manifest doesn't exist, make one
-            if(File.Exists(target) == false )
+            if (File.Exists(target) == false )
             {
                 Console.WriteLine("Visual Elements manifest not found, creating one.");
                 CopyTemplate();
@@ -259,6 +267,8 @@ namespace PrettyTiles
             }
 
             CopyImage();
+            RefreshLink(_linkpath);
+            Console.WriteLine("Tile has been changed");
         }
     }
 }

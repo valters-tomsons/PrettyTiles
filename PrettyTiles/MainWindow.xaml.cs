@@ -230,6 +230,12 @@ namespace PrettyTiles
         //"Browse Image" button
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
+            //Don't proceed if no title is selected
+            if(IconList.SelectedIndex == -1)
+            {
+                return;
+            }
+
             var dialog = new VistaOpenFileDialog();
             dialog.Title = "Select an image for Tile";
             dialog.ShowDialog();

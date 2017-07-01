@@ -16,10 +16,8 @@ namespace PrettyTiles
     public partial class MainWindow : MetroWindow
     {
         private static string _appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
         private static List<string> ShortcutList = new List<string>();
         private static string _programs = $"{_appdata}\\Microsoft\\Windows\\Start Menu\\Programs\\";
-
         private static string CurrentFile = null;
 
         public MainWindow()
@@ -234,6 +232,14 @@ namespace PrettyTiles
             }
         }
 
+        private void CopyImage()
+        {
+            string sourceFile = TilePreview.Source.ToString().Replace(@"file:///", String.Empty);
+            string targetFile = $"{Path.GetDirectoryName(CurrentFile)}/tile.jpg";
+            Console.WriteLine(TilePreview.Source);
+            File.Copy(sourceFile, targetFile, true);
+        }
+
         //"Update" Button 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -251,7 +257,8 @@ namespace PrettyTiles
             {
                 Console.WriteLine("Visual Elements manifest exists, not creating a new one.");
             }
-            
+
+            CopyImage();
         }
     }
 }

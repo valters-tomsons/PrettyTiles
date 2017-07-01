@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Height="600" Width="600"
         MinHeight="500" MinWidth="600"
-        Title="PrettyTile">
+        Title="PrettyTile" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

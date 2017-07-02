@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using Ookii.Dialogs.Wpf;
 using System.Windows;
 using System.Reflection;
+using System.Linq;
 
 namespace PrettyTiles
 {
@@ -40,13 +41,24 @@ namespace PrettyTiles
 
         }
 
+        //Ignored files not to add
+        static List<string> IgnoredFiles()
+        {
+            List<string> list = new List<string>();
+
+            //W10 Optional Features
+            list.Add("fohelper.exe");
+
+            return list;
+        }
+
         //Discover the shortcuts in start menu
         static void ExploreShortcuts()
         {
             foreach (string file in Directory.EnumerateFiles(_programs))
             {
                 string lnk = file;
-                if(lnk.Contains(".lnk"))
+                if (lnk.Contains(".lnk"))
                 {
                     lnk = lnk.Replace(_programs, String.Empty);
                     lnk = lnk.Replace(".lnk", String.Empty);
@@ -59,7 +71,7 @@ namespace PrettyTiles
         //Load shortcut list into the ItemList control
         void LoadShortcuts()
         {
-            foreach(string foo in ShortcutList)
+            foreach (string foo in ShortcutList)
             {
                 IconList.Items.Add(foo);
             }
@@ -77,7 +89,7 @@ namespace PrettyTiles
             string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
             string visualXml = Path.Combine(fileDirectory, $"{currentFile}.visualelementsmanifest.xml");
             string tileImage = TileSourceFromXml(visualXml);
-            if(tileImage != null)
+            if (tileImage != null)
             {
                 //Load tile from image
                 target.Source = new BitmapImage(new Uri($"{fileDirectory}\\{tileImage}"));
@@ -88,7 +100,7 @@ namespace PrettyTiles
                 var placeholderUri = new Uri("resources\\placeholder.jpg", UriKind.RelativeOrAbsolute);
                 target.Source = new BitmapImage(placeholderUri);
             }
-            
+
         }
 
         private void UpdateCheckboxes()
@@ -164,7 +176,7 @@ namespace PrettyTiles
                 {
                     DeleteManifest(_xml);
                 }
-                
+
             }
             return false;
         }
@@ -198,7 +210,7 @@ namespace PrettyTiles
                 {
                     DeleteManifest(_xml);
                 }
-                
+
             }
             return false;
         }
@@ -206,7 +218,7 @@ namespace PrettyTiles
         //Delete xml manifest
         private static void DeleteManifest(string _xml)
         {
-            if(File.Exists(_xml))
+            if (File.Exists(_xml))
             {
                 Console.WriteLine("Manifest file broken, deleting");
                 File.Delete(_xml);
@@ -216,7 +228,7 @@ namespace PrettyTiles
         //Get target path from shortcut (lnk)
         //Should work for all windows versions, because 2006
         //http://www.saunalahti.fi/janij/blog/2006-12.html#d6d9c7ee-82f9-4781-8594-152efecddae2
-        private string GetTargetPath(string _lnk)
+        private static string GetTargetPath(string _lnk)
         {
             Shell shell = new ShellClass();
             Folder folder = shell.NameSpace(_programs);
@@ -246,7 +258,7 @@ namespace PrettyTiles
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             //Don't proceed if no title is selected
-            if(IconList.SelectedIndex == -1)
+            if (IconList.SelectedIndex == -1)
             {
                 return;
             }
@@ -258,7 +270,7 @@ namespace PrettyTiles
             {
                 TilePreview.Source = new BitmapImage(new Uri(dialog.FileName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Failed to set the tile image.");
                 Console.WriteLine(ex);
@@ -276,13 +288,13 @@ namespace PrettyTiles
             Console.WriteLine(manifest);
 
             //Delete manifest & tile image
-            if(File.Exists(manifest))
+            if (File.Exists(manifest))
             {
                 Console.WriteLine("Visual manifest exists, deleting");
                 File.Delete(manifest);
             }
-            
-            if(File.Exists(tileimg))
+
+            if (File.Exists(tileimg))
             {
                 Console.WriteLine("Tile Image exists, deleting");
                 File.Delete(tileimg);
@@ -316,7 +328,7 @@ namespace PrettyTiles
             string _linkpath = $"{_programs}{IconList.SelectedItem.ToString()}.lnk";
 
             //If visual manifest doesn't exist, make one
-            if (File.Exists(target) == false )
+            if (File.Exists(target) == false)
             {
                 Console.WriteLine("Visual Elements manifest not found, creating one.");
                 CopyTemplate();

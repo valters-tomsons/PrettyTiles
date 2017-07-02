@@ -31,12 +31,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image x:Name="TilePreview" Height="150" Width="150" Source="resources/placeholder.jpg" Grid.Column="0"/>
-            <Button Click="BrowseButton_Click" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,20" Height="30" Width="100" Content="Browse Image" />
+            <Button Click="BrowseButton_Click" Grid.Column="0" VerticalAlignment="Bottom" Margin="0,20" Height="30" Width="100" Content="Browse Image" ToolTip="Browse an image for tile"/>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
                 <CheckBox x:Name="ShowLabel" Content="Show Label"/>
                 <CheckBox x:Name="DarkLabel" Content="Dark Label" Margin="0,5" />
             </StackPanel>
-            <Button Click="UpdateButton_Click" Width="90" Height="30" Margin="50,0" Grid.Column="2" Content="Update"/>
+            <Button Click="UpdateButton_Click" Width="90" Height="30" VerticalAlignment="Top" Margin="0,120" Grid.Column="2" Content="Update" ToolTip="Update custom tile information"/>
+            <Button Click="ClearTile_Click" Width="90" Height="30" Grid.Column="2" Content="Clear Tile" VerticalAlignment="Bottom" Margin="0,90" ToolTip="Remove custom tile information and refresh tile"/>
         </Grid>
 
         <iconPacks:PackIconMaterial Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>

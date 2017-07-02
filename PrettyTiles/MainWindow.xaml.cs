@@ -203,6 +203,7 @@ namespace PrettyTiles
             return false;
         }
 
+        //Delete xml manifest
         private static void DeleteManifest(string _xml)
         {
             if(File.Exists(_xml))
@@ -262,6 +263,33 @@ namespace PrettyTiles
                 MessageBox.Show("Failed to set the tile image.");
                 Console.WriteLine(ex);
             }
+        }
+
+        private void ClearTile_Click(object sender, RoutedEventArgs e)
+        {
+            string directory = Path.GetDirectoryName(CurrentFile);
+            string filename = Path.GetFileNameWithoutExtension(CurrentFile);
+            string _linkpath = $"{_programs}{IconList.SelectedItem.ToString()}.lnk";
+            string manifest = $"{directory}\\{filename}.visualelementsmanifest.xml";
+            string tileimg = TileSourceFromXml(manifest);
+
+            Console.WriteLine(manifest);
+
+            //Delete manifest & tile image
+            if(File.Exists(manifest))
+            {
+                Console.WriteLine("Visual manifest exists, deleting");
+                File.Delete(manifest);
+            }
+            
+            if(File.Exists(tileimg))
+            {
+                Console.WriteLine("Tile Image exists, deleting");
+                File.Delete(tileimg);
+            }
+
+            //Refresh tile
+            RefreshLink(_linkpath);
         }
 
         private void CopyImage()

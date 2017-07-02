@@ -73,7 +73,22 @@ namespace PrettyTiles
         {
             foreach (string foo in ShortcutList)
             {
-                IconList.Items.Add(foo);
+                string _linkpath = $"{_programs}{foo}.lnk";
+                string _path = Path.GetDirectoryName(_linkpath);
+                string _file = Path.GetFileName(_linkpath);
+
+                Shell shell = new ShellClass();
+                Folder folder = shell.NameSpace(_path);
+                FolderItem item = folder.ParseName(_file);
+                ShellLinkObject link = (ShellLinkObject)item.GetLink;
+                string _target = link.Path;
+
+                //Check if file exists and is not in the blacklist
+                if (File.Exists(_target) && IgnoredFiles().Contains(_target) == false)
+                {
+                    IconList.Items.Add(foo);
+                }
+                
             }
         }
 

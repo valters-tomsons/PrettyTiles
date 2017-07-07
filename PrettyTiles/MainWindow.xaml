@@ -40,6 +40,6 @@
             <Button Click="ClearTile_Click" Width="90" Height="30" Grid.Column="2" Content="Clear Tile" VerticalAlignment="Bottom" Margin="0,90" ToolTip="Remove custom tile information and refresh tile"/>
         </Grid>
 
-        <iconPacks:PackIconMaterial Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>
+        <iconPacks:PackIconMaterial ToolTip="Visit GitHub Repository" Background="White" Margin="5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Kind="GithubCircle" Height="25" Width="25" MouseDoubleClick="GithubIcon_MouseDoubleClick" Grid.Row="1"/>
     </Grid>
 </Controls:MetroWindow>

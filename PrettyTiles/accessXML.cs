@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace PrettyTiles
@@ -121,5 +118,11 @@ namespace PrettyTiles
             }
             return false;
         }
+
+        public static void WriteDarkToXml(string _xml)
+        {
+
+        }
+
     }
 }

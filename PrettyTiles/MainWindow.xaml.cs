@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using MahApps.Metro.Controls;
 using Shell32;
-using System.Xml;
 using System.Windows.Media.Imaging;
 using Ookii.Dialogs.Wpf;
 using System.Windows;

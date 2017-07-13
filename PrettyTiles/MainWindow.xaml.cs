@@ -332,10 +332,18 @@ namespace PrettyTiles
 
         private void CopyImage()
         {
-            Console.WriteLine("Copying tile image...");
+            Console.WriteLine("Begining to copy tile");
             string sourceFile = TilePreview.Source.ToString().Replace(@"file:///", String.Empty);
             string targetFile = $"{Path.GetDirectoryName(CurrentFile)}/tile.jpg";
+
+            if(Path.GetFileName(sourceFile) == Path.GetFileName(targetFile))
+            {
+                Console.WriteLine("Image unchanged, skipping");
+                return;
+            }
+
             File.Copy(sourceFile, targetFile, true);
+            Console.WriteLine("Tile copied");
         }
 
         //Force a tile refresh in start menu
@@ -343,6 +351,11 @@ namespace PrettyTiles
         {
             Console.WriteLine("Refreshing the tile");
             File.SetLastWriteTime(_file, DateTime.Now);
+        }
+
+        private void UpdateProperties()
+        {
+
         }
 
         //"Update" Button 
@@ -365,6 +378,7 @@ namespace PrettyTiles
             }
 
             CopyImage();
+            UpdateProperties();
             RefreshLink(_linkpath);
             Console.WriteLine("Tile has been changed");
         }

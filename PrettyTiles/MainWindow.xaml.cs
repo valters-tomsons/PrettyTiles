@@ -104,10 +104,21 @@ namespace PrettyTiles
             string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
             string visualXml = Path.Combine(fileDirectory, $"{currentFile}.visualelementsmanifest.xml");
             string tileImage = TileSourceFromXml(visualXml);
+
             if (tileImage != null)
             {
+                Console.WriteLine("Cacheing tile...");
+
                 //Load tile from image
-                target.Source = new BitmapImage(new Uri($"{fileDirectory}\\{tileImage}"));
+                Uri TileSource = new Uri($"{fileDirectory}\\{tileImage}");
+
+                BitmapImage _tile = new BitmapImage();
+                _tile.BeginInit();
+                _tile.CacheOption = BitmapCacheOption.OnLoad;
+                _tile.UriSource = TileSource;
+                _tile.EndInit();
+
+                target.Source = _tile;
             }
             else
             {

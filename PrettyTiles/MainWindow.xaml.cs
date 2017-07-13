@@ -9,6 +9,7 @@ using System.Xml;
 using System.Windows.Media.Imaging;
 using Ookii.Dialogs.Wpf;
 using System.Windows;
+using static PrettyTiles.accessXML;
 using System.Reflection;
 using System.Linq;
 
@@ -139,116 +140,6 @@ namespace PrettyTiles
 
             ShowLabel.IsChecked = labelValue;
             DarkLabel.IsChecked = darkValue;
-        }
-
-        //Get tile image source from visual elements manifest xml
-        static string TileSourceFromXml(string _xml)
-        {
-            if (File.Exists(_xml))
-            {
-                try
-                {
-                    using (XmlReader reader = XmlReader.Create(_xml))
-                    {
-                        while (reader.Read())
-                        {
-                            if (reader.IsStartElement())
-                            {
-                                switch (reader.Name)
-                                {
-                                    case "Application":
-                                        break;
-                                    case "VisualElements":
-                                        string attribute = reader["Square150x150Logo"];
-                                        return attribute;
-                                }
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    DeleteManifest(_xml);
-                }
-            }
-            return null;
-        }
-
-        static bool TileLabelFromXml(string _xml)
-        {
-            if (File.Exists(_xml))
-            {
-                try
-                {
-                    using (XmlReader reader = XmlReader.Create(_xml))
-                    {
-                        while (reader.Read())
-                        {
-                            if (reader.IsStartElement())
-                            {
-                                switch (reader.Name)
-                                {
-                                    case "Application":
-                                        break;
-                                    case "VisualElements":
-                                        string attribute = reader["ShowNameOnSquare150x150Logo"];
-                                        if (attribute == "on") { return true; } else { return false; }
-                                }
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    DeleteManifest(_xml);
-                }
-
-            }
-            return false;
-        }
-
-        static bool TileDarkFromXml(string _xml)
-        {
-            if (File.Exists(_xml))
-            {
-                try
-                {
-                    using (XmlReader reader = XmlReader.Create(_xml))
-                    {
-                        while (reader.Read())
-                        {
-                            if (reader.IsStartElement())
-                            {
-                                switch (reader.Name)
-                                {
-                                    case "Application":
-                                        break;
-                                    case "VisualElements":
-                                        string attribute = reader["ForegroundText"];
-                                        //dark and light
-                                        if (attribute == "dark") { return true; } else { return false; }
-                                }
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    DeleteManifest(_xml);
-                }
-
-            }
-            return false;
-        }
-
-        //Delete xml manifest
-        private static void DeleteManifest(string _xml)
-        {
-            if (File.Exists(_xml))
-            {
-                Console.WriteLine("Manifest file broken, deleting");
-                File.Delete(_xml);
-            }
         }
 
         //Get target path from shortcut (lnk)

@@ -245,7 +245,12 @@ namespace PrettyTiles
 
         private void UpdateProperties()
         {
+            string fileDirectory = Path.GetDirectoryName(CurrentFile);
+            string currentFile = Path.GetFileNameWithoutExtension(CurrentFile);
+            string visualXml = Path.Combine(fileDirectory, $"{currentFile}.visualelementsmanifest.xml");
 
+            WriteLabelToXml(visualXml, ShowLabel.IsChecked.Value);
+            WriteDarkToXml(visualXml, DarkLabel.IsChecked.Value);
         }
 
         //"Update" Button 

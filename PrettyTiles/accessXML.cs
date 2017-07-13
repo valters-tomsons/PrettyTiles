@@ -119,9 +119,40 @@ namespace PrettyTiles
             return false;
         }
 
-        public static void WriteDarkToXml(string _xml)
+        public static void WriteLabelToXml(string _xml, bool value)
         {
+            XmlDocument xmlFile = new XmlDocument();
+            xmlFile.Load(_xml);
+            XmlAttribute attribute = (XmlAttribute)xmlFile.SelectSingleNode("//Application//VisualElements/@ShowNameOnSquare150x150Logo");
 
+            if (value == true)
+            {
+                attribute.Value = "on";
+            }
+            else
+            {
+                attribute.Value = "off";
+            }
+
+            xmlFile.Save(_xml);
+        }
+
+        public static void WriteDarkToXml(string _xml, bool value)
+        {
+            XmlDocument xmlFile = new XmlDocument();
+            xmlFile.Load(_xml);
+            XmlAttribute attribute = (XmlAttribute)xmlFile.SelectSingleNode("//Application//VisualElements/@ForegroundText");
+
+            if(value == true)
+            {
+                attribute.Value = "dark";
+            }
+            else
+            {
+                attribute.Value = "light";
+            }
+            
+            xmlFile.Save(_xml);
         }
 
     }

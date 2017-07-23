@@ -1,5 +1,7 @@
 # PrettyTiles
 
+![](http://i.imgur.com/6QH9led.png)
+
 A user friendly Windows 10 tile creator. 
 
 1. Pin a program to start menu manually

@@ -261,21 +261,24 @@ namespace PrettyTiles
             string target = $"{directory}\\{filename}.visualelementsmanifest.xml";
             string _linkpath = $"{_programs}{IconList.SelectedItem.ToString()}.lnk";
 
-            //If visual manifest doesn't exist, make one
-            if (File.Exists(target) == false)
+            if(File.Exists(TilePreview.Source.ToString()))
             {
-                Console.WriteLine("Visual Elements manifest not found, creating one.");
-                CopyTemplate();
-            }
-            else
-            {
-                Console.WriteLine("Visual Elements manifest exists, not creating a new one.");
-            }
+                //If visual manifest doesn't exist, make one
+                if (File.Exists(target) == false)
+                {
+                    Console.WriteLine("Visual Elements manifest not found, creating one.");
+                    CopyTemplate();
+                }
+                else
+                {
+                    Console.WriteLine("Visual Elements manifest exists, not creating a new one.");
+                }
 
-            CopyImage();
-            UpdateProperties();
-            RefreshLink(_linkpath);
-            Console.WriteLine("Tile has been changed");
+                CopyImage();
+                UpdateProperties();
+                RefreshLink(_linkpath);
+                Console.WriteLine("Tile has been changed");
+            }
         }
     }
 }
